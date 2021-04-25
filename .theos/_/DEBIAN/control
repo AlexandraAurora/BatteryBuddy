@@ -1,0 +1,13 @@
+Package: love.litten.batterybuddy
+Name: BatteryBuddy ⚡️
+Depends: mobilesubstrate
+Architecture: iphoneos-arm
+Description: Battery indicator, but cute
+Maintainer: Litten
+Author: Litten & neilsardesai
+Section: Tweaks
+Depiction: https://repo.litten.love/depictions/bdy/index.html
+SileoDepiction: https://repo.litten.love/depictions/bdy/bdy.json
+Icon: https://repo.litten.love/depictions/bdy/assets/icon.png
+Version: 1.0
+Installed-Size: 192
