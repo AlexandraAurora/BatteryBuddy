@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo ""
 echo "   _, .--.       "
 echo "  (  / (  '-.    "
@@ -13,5 +15,5 @@ echo "         \\      "
 echo "          \\     "
 echo "      -.'. \.'.- "
 echo ""
-echo "Thank You For Installing BatteryBuddy 1.0 🤗"
+echo "Thank You For Installing BatteryBuddy 1.0.1 🤗"
 echo ""
