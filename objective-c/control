@@ -1,7 +1,7 @@
 Package: love.litten.batterybuddy
 Name: BatteryBuddy ⚡️
 Depends: mobilesubstrate
-Version: 1.0.1
+Version: 1.0.2
 Architecture: iphoneos-arm
 Description: Battery indicator, but cute
 Maintainer: Litten
