@@ -7,6 +7,6 @@ Description: Battery indicator, but cute
 Maintainer: Litten
 Author: Litten & neilsardesai
 Section: Tweaks
-Depiction: https://repo.litten.love/depictions/bdy/index.html
-SileoDepiction: https://repo.litten.love/depictions/bdy/bdy.json
-Icon: https://repo.litten.love/depictions/bdy/assets/icon.png
+Depiction: https://repo.litten.love/depictions/BatteryBuddy/index.html
+SileoDepiction: https://repo.litten.love/depictions/BatteryBuddy/index.json
+Icon: https://repo.litten.love/depictions/BatteryBuddy/assets/icon.png
