@@ -16,3 +16,9 @@ Battery Indicator, but cute
 If you take code from this repository please link it, or my [twitter](https://twitter.com/schneelittchen) to your project  
 You may not redistribute this source code or packages from it  
 You may not use this project to make profit like money
+
+## Credits
+  - Original Creator for macOS
+    - [neilsardesai](https://twitter.com/neilsardesai)
+  - Icon and Banner
+    - [74k1_](https://twitter.com/74k1_)
