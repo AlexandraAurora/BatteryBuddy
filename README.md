@@ -8,7 +8,7 @@ Battery Indicator, but cute
 ## Compiling
   - Objective-C:
     - No dependencies
-  - Swift:
+  - Swift (outdated):
     - Depends on Orion
   - You may want to edit the `Makefiles` to suit your theos installation
 
