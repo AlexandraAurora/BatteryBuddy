@@ -7,7 +7,7 @@ var batteryChargerView:UIImageView = UIImageView()
 var LSBatteryIconView:UIImageView = UIImageView()
 var LSBatteryChargerView:UIImageView = UIImageView()
 var isCharging = Bool()
-var isLowPowerModeActive = Bool()
+var isLowPowerModeActive = ProcessInfo.processInfo.isLowPowerModeEnabled
 
 class BatteryViewHook: ClassHook<UIView> {
     
@@ -158,20 +158,6 @@ class LockscreenBatteryViewHook: ClassHook<UIView> { // add lockscreen battery i
         if !LSBatteryIconView.isDescendant(of:target.superview!) {
             target.superview!.addSubview(LSBatteryIconView)
         }
-        
-    }
-    
-}
-
-class NSProcessInfoHook: ClassHook<NSObject> { // check if low power mode is active
-    
-    static let targetName = "NSProcessInfo"
-    
-    func isLowPowerModeEnabled() -> Bool {
-        
-        isLowPowerModeActive = orig.isLowPowerModeEnabled()
-        
-        return isLowPowerModeActive
         
     }
     
