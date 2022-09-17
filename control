@@ -1,0 +1,10 @@
+Package: dev.traurige.batterybuddy
+Name: BatteryBuddy ⚡️
+Depends: mobilesubstrate
+Conflicts: love.litten.batterybuddy
+Version: 1.0.3
+Architecture: iphoneos-arm
+Description: Battery indicator, but cute
+Maintainer: Traurige
+Author: Traurige & neilsardesai
+Section: Tweaks
