@@ -8,20 +8,16 @@
 #import "BatteryBuddy.h"
 
 BOOL (* orig__UIBatteryView__shouldShowBolt)(_UIBatteryView* self, SEL _cmd);
-UIColor* (* orig__UIBatteryView_fillColor)(_UIBatteryView* self, SEL _cmd);
-CGFloat (* orig__UIBatteryView_chargePercent)(_UIBatteryView* self, SEL _cmd);
-long long (* orig__UIBatteryView_chargingState)(_UIBatteryView* self, SEL _cmd);
-void (* orig__UIBatteryView__updateFillLayer)(_UIBatteryView* self, SEL _cmd);
-void (* orig_CSBatteryFillView_didMoveToWindow)(CSBatteryFillView* self, SEL _cmd);
-
 BOOL override__UIBatteryView__shouldShowBolt(_UIBatteryView* self, SEL _cmd) {
 	return NO;
 }
 
+UIColor* (* orig__UIBatteryView_fillColor)(_UIBatteryView* self, SEL _cmd);
 UIColor* override__UIBatteryView_fillColor(_UIBatteryView* self, SEL _cmd) {
 	return [orig__UIBatteryView_fillColor(self, _cmd) colorWithAlphaComponent:0.25];
 }
 
+CGFloat (* orig__UIBatteryView_chargePercent)(_UIBatteryView* self, SEL _cmd);
 CGFloat override__UIBatteryView_chargePercent(_UIBatteryView* self, SEL _cmd) {
 	CGFloat orig = orig__UIBatteryView_chargePercent(self, _cmd);
 	int actualPercentage = orig * 100;
@@ -41,6 +37,7 @@ CGFloat override__UIBatteryView_chargePercent(_UIBatteryView* self, SEL _cmd) {
 	return orig;
 }
 
+long long (* orig__UIBatteryView_chargingState)(_UIBatteryView* self, SEL _cmd);
 long long override__UIBatteryView_chargingState(_UIBatteryView* self, SEL _cmd) {
 	long long orig = orig__UIBatteryView_chargingState(self, _cmd);
 
@@ -55,6 +52,7 @@ long long override__UIBatteryView_chargingState(_UIBatteryView* self, SEL _cmd) 
 	return orig;
 }
 
+void (* orig__UIBatteryView__updateFillLayer)(_UIBatteryView* self, SEL _cmd);
 void override__UIBatteryView__updateFillLayer(_UIBatteryView* self, SEL _cmd) {
 	orig__UIBatteryView__updateFillLayer(self, _cmd);
 	[self chargingState];
@@ -103,6 +101,7 @@ void _UIBatteryView_updateIconColor(_UIBatteryView* self, SEL _cmd) {
 	}
 }
 
+void (* orig_CSBatteryFillView_didMoveToWindow)(CSBatteryFillView* self, SEL _cmd);
 void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cmd) {
 	orig_CSBatteryFillView_didMoveToWindow(self, _cmd);
 
@@ -134,12 +133,27 @@ void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cm
 }
 
 __attribute__((constructor)) static void initialize() {
-	MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(_shouldShowBolt), (IMP)&override__UIBatteryView__shouldShowBolt, (IMP *)&orig__UIBatteryView__shouldShowBolt);
-	MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(fillColor), (IMP)&override__UIBatteryView_fillColor, (IMP *)&orig__UIBatteryView_fillColor);
-	MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(chargePercent), (IMP)&override__UIBatteryView_chargePercent, (IMP *)&orig__UIBatteryView_chargePercent);
-	MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(chargingState), (IMP)&override__UIBatteryView_chargingState, (IMP *)&orig__UIBatteryView_chargingState);
-	MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(_updateFillLayer), (IMP)&override__UIBatteryView__updateFillLayer, (IMP *)&orig__UIBatteryView__updateFillLayer);
-	class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(refreshIcon), (IMP)&_UIBatteryView_refreshIcon, "v@:");
-	class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(updateIconColor), (IMP)&_UIBatteryView_updateIconColor, "v@:");
-	MSHookMessageEx(NSClassFromString(@"CSBatteryFillView"), @selector(didMoveToWindow), (IMP)&override_CSBatteryFillView_didMoveToWindow, (IMP *)&orig_CSBatteryFillView_didMoveToWindow);
+	preferences = [[HBPreferences alloc] initWithIdentifier:@"dev.traurige.batterybuddypreferences"];
+	[preferences registerBool:&enabled default:YES forKey:@"enabled"];
+	if (!enabled) {
+		return;
+	}
+
+	// visibility
+	[preferences registerBool:&pfShowInStatusBar default:YES forKey:@"showInStatusBar"];
+	[preferences registerBool:&pfShowOnLockScreen default:YES forKey:@"showOnLockScreen"];
+	
+	if (pfShowInStatusBar) {
+		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(refreshIcon), (IMP)&_UIBatteryView_refreshIcon, "v@:");
+		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(updateIconColor), (IMP)&_UIBatteryView_updateIconColor, "v@:");
+
+		MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(_shouldShowBolt), (IMP)&override__UIBatteryView__shouldShowBolt, (IMP *)&orig__UIBatteryView__shouldShowBolt);
+		MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(fillColor), (IMP)&override__UIBatteryView_fillColor, (IMP *)&orig__UIBatteryView_fillColor);
+		MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(chargePercent), (IMP)&override__UIBatteryView_chargePercent, (IMP *)&orig__UIBatteryView_chargePercent);
+		MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(chargingState), (IMP)&override__UIBatteryView_chargingState, (IMP *)&orig__UIBatteryView_chargingState);
+		MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(_updateFillLayer), (IMP)&override__UIBatteryView__updateFillLayer, (IMP *)&orig__UIBatteryView__updateFillLayer);
+	}
+	if (pfShowOnLockScreen) {
+		MSHookMessageEx(NSClassFromString(@"CSBatteryFillView"), @selector(didMoveToWindow), (IMP)&override_CSBatteryFillView_didMoveToWindow, (IMP *)&orig_CSBatteryFillView_didMoveToWindow);
+	}
 }

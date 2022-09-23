@@ -1,8 +1,8 @@
 Package: dev.traurige.batterybuddy
-Name: BatteryBuddy ⚡️
-Depends: mobilesubstrate
+Name: BatteryBuddy
+Depends: mobilesubstrate, preferenceloader, ws.hbang.common (>= 1.14), firmware (>= 13.0)
 Conflicts: love.litten.batterybuddy
-Version: 1.0.3
+Version: 1.1
 Architecture: iphoneos-arm
 Description: Battery indicator, but cute
 Maintainer: Traurige

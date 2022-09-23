@@ -1,8 +1,8 @@
-# Battery Buddy ⚡️
+# Battery Buddy
 Battery Indicator, but cute
 
 ## Preview
-<img src="Preview.png" alt="BatteryBuddy preview" />
+<img src="Preview.png" alt="Preview" />
 
 ## Installation
 1. Download the latest `deb` from the [releases](https://github.com/Traurige/BatteryBuddy/releases)
