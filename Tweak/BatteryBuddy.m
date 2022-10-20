@@ -7,6 +7,8 @@
 
 #import "BatteryBuddy.h"
 
+#pragma mark - Status Bar
+
 BOOL (* orig__UIBatteryView__shouldShowBolt)(_UIBatteryView* self, SEL _cmd);
 BOOL override__UIBatteryView__shouldShowBolt(_UIBatteryView* self, SEL _cmd) {
 	return NO;
@@ -101,6 +103,8 @@ void _UIBatteryView_updateIconColor(_UIBatteryView* self, SEL _cmd) {
 	}
 }
 
+#pragma mark - Lock screen
+
 void (* orig_CSBatteryFillView_didMoveToWindow)(CSBatteryFillView* self, SEL _cmd);
 void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cmd) {
 	orig_CSBatteryFillView_didMoveToWindow(self, _cmd);
@@ -131,6 +135,8 @@ void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cm
 		[[self superview] addSubview:lockscreenBatteryChargerView];
 	}
 }
+
+#pragma mark - Constructor
 
 __attribute__((constructor)) static void initialize() {
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"dev.traurige.batterybuddypreferences"];
