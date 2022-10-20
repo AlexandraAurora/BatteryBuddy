@@ -111,6 +111,7 @@ void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cm
 
 	[[self superview] setClipsToBounds:NO];
 
+	// face
 	if (!lockscreenBatteryIconView) {
 		lockscreenBatteryIconView = [[UIImageView alloc] initWithFrame:[self bounds]];
 		[lockscreenBatteryIconView setContentMode:UIViewContentModeScaleAspectFill];
@@ -123,6 +124,8 @@ void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cm
 		[[self superview] addSubview:lockscreenBatteryIconView];
 	}
 
+
+	// charger
 	if (!lockscreenBatteryChargerView) {
 		lockscreenBatteryChargerView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.origin.x - 25, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
 		[lockscreenBatteryChargerView setContentMode:UIViewContentModeScaleAspectFill];
@@ -159,6 +162,7 @@ __attribute__((constructor)) static void initialize() {
 		MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(chargingState), (IMP)&override__UIBatteryView_chargingState, (IMP *)&orig__UIBatteryView_chargingState);
 		MSHookMessageEx(NSClassFromString(@"_UIBatteryView"), @selector(_updateFillLayer), (IMP)&override__UIBatteryView__updateFillLayer, (IMP *)&orig__UIBatteryView__updateFillLayer);
 	}
+	
 	if (pfShowOnLockScreen) {
 		MSHookMessageEx(NSClassFromString(@"CSBatteryFillView"), @selector(didMoveToWindow), (IMP)&override_CSBatteryFillView_didMoveToWindow, (IMP *)&orig_CSBatteryFillView_didMoveToWindow);
 	}
