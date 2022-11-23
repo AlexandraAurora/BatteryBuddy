@@ -1,22 +1,44 @@
-<?xml version="1" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1//EN" "http://www.apple.com/DTDs/PropertyList-1.dtd">
-<plist version="1">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
 <dict>
 	<key>items</key>
 	<array>
 		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
 			<key>cellClass</key>
-			<string>CallaTwitterCell</string>
-			<key>leftUserDisplayName</key>
+			<string>CallaDuoContactCell</string>
+			<key>LeftUserDisplayName</key>
 			<string>Alexandra</string>
-			<key>leftUserUsername</key>
+			<key>LeftUserUsername</key>
 			<string>Traurige</string>
-			<key>rightUserDisplayName</key>
-			<string>taki</string>
-			<key>rightUserUsername</key>
-			<string>74k1_</string>
+			<key>LeftUserUrl</key>
+			<string>https://github.com/Traurige</string>
+			<key>RightUserDisplayName</key>
+			<string>Neil Sardesai</string>
+			<key>RightUserUsername</key>
+			<string>neilsardesai</string>
+			<key>RightUserUrl</key>
+			<string>https://github.com/neilsardesai</string>
 			<key>height</key>
 			<real>58</real>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true />
+			<key>defaults</key>
+			<string>dev.traurige.batterybuddy.preferences</string>
+			<key>key</key>
+			<string>Enabled</string>
+			<key>label</key>
+			<string>Enable BatteryBuddy</string>
+            <key>PostNotification</key>
+			<string>dev.traurige.batterybuddy.preferences.reload</string>
 		</dict>
 
 		<dict>
@@ -29,36 +51,36 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<true/>
+			<true />
 			<key>defaults</key>
-			<string>dev.traurige.batterybuddypreferences</string>
+			<string>dev.traurige.batterybuddy.preferences</string>
 			<key>key</key>
-			<string>showInStatusBar</string>
+			<string>ShowInStatusBar</string>
 			<key>label</key>
 			<string>Show in Status Bar</string>
+			<key>PostNotification</key>
+			<string>dev.traurige.batterybuddy.preferences.reload</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<true/>
+			<true />
 			<key>defaults</key>
-			<string>dev.traurige.batterybuddypreferences</string>
+			<string>dev.traurige.batterybuddy.preferences</string>
 			<key>key</key>
-			<string>showOnLockScreen</string>
+			<string>ShowOnLockScreen</string>
 			<key>label</key>
 			<string>Show on Lock Screen</string>
+			<key>PostNotification</key>
+			<string>dev.traurige.batterybuddy.preferences.reload</string>
 		</dict>
-		
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Other Options</string>
-			<key>footerText</key>
-			<string>All changes require a respring.</string>
-			<key>isStaticText</key>
-			<true/>
+			<string>Tools</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -83,7 +105,7 @@
 			<key>footerText</key>
 			<string>Thanks to you and everyone who has helped in any way.</string>
 			<key>isStaticText</key>
-			<true/>
+			<true />
 		</dict>
 		<dict>
  			<key>cell</key>
@@ -91,48 +113,52 @@
  			<key>label</key>
  			<string>Credits</string>
  			<key>detail</key>
- 			<string>BatteryBuddyCreditsSubPreferencesListController</string>
- 			<key>BatteryBuddySub</key>
- 			<string>SubPreferences/Credits</string>
+ 			<string>BatteryBuddyCreditsListController</string>
  		</dict>
 
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>BatteryBuddy by Traurige, icon and banner by taki</string>
+			<string>BatteryBuddy iOS port by Traurige, macOS original by neilsardesai</string>
 			<key>isStaticText</key>
-			<true/>
+			<true />
 		</dict>
 		<dict>
 			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<string>CallaLinkCell</string>
 			<key>label</key>
 			<string>Source Code</string>
 			<key>subtitle</key>
 			<string>It's on GitHub</string>
 			<key>url</key>
 			<string>https://github.com/Traurige/BatteryBuddy</string>
+			<key>height</key>
+			<real>52</real>
 		</dict>
 		<dict>
 			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<string>CallaLinkCell</string>
 			<key>label</key>
 			<string>Bug/Feature</string>
 			<key>subtitle</key>
 			<string>Submit an issue</string>
 			<key>url</key>
 			<string>https://github.com/Traurige/BatteryBuddy/issues/new/choose</string>
+			<key>height</key>
+			<real>52</real>
 		</dict>
 		<dict>
 			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
+			<string>CallaLinkCell</string>
 			<key>label</key>
 			<string>Donate</string>
 			<key>subtitle</key>
 			<string>I got a Ko-fi</string>
 			<key>url</key>
 			<string>https://ko-fi.com/traurige</string>
+			<key>height</key>
+			<real>52</real>
 		</dict>
 	</array>
 	<key>title</key>

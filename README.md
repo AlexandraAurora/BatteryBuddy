@@ -1,5 +1,5 @@
 # Battery Buddy
-Battery Indicator, but cute
+Battery indicator, but cute
 
 ## Preview
 <img src="Preview.png" alt="Preview" />
@@ -17,9 +17,3 @@ iPhone, iPad and iPod running iOS/iPadOS 13 or later
 
 ## License
 [GPLv3](https://github.com/Traurige/BatteryBuddy/blob/main/COPYING)
-
-## Credits
-  - Original Creator For macOS
-    - [neilsardesai](https://twitter.com/neilsardesai)
-  - Icon And Banner
-    - [74k1_](https://twitter.com/74k1_)

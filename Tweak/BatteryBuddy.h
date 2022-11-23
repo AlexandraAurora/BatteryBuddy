@@ -7,7 +7,7 @@
 
 #import "substrate.h"
 #import <UIKit/UIKit.h>
-#import <Cephei/HBPreferences.h>
+#import "../Preferences/PreferenceKeys.h"
 
 UIImageView* statusBarBatteryIconView;
 UIImageView* statusBarBatteryChargerView;
@@ -16,10 +16,8 @@ UIImageView* lockscreenBatteryChargerView;
 BOOL isCharging = NO;
 
 // preferences
-HBPreferences* preferences;
-BOOL enabled;
-
-// - visibility
+NSUserDefaults* preferences;
+BOOL pfEnabled;
 BOOL pfShowInStatusBar;
 BOOL pfShowOnLockScreen;
 
