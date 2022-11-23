@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "../Preferences/PreferenceKeys.h"
 
-UIImageView* statusBarBatteryIconView;
-UIImageView* statusBarBatteryChargerView;
-UIImageView* lockscreenBatteryIconView;
-UIImageView* lockscreenBatteryChargerView;
 BOOL isCharging = NO;
 
 // preferences
@@ -22,6 +18,8 @@ BOOL pfShowInStatusBar;
 BOOL pfShowOnLockScreen;
 
 @interface _UIBatteryView : UIView
+@property(nonatomic, retain)UIImageView* batteryBuddyStatusBarIconImageView;
+@property(nonatomic, retain)UIImageView* batteryBuddyStatusBarChargerImageView;
 - (CGFloat)chargePercent;
 - (long long)chargingState;
 - (void)refreshIcon;
@@ -29,4 +27,6 @@ BOOL pfShowOnLockScreen;
 @end
 
 @interface CSBatteryFillView : UIView
+@property(nonatomic, retain)UIImageView* batteryBuddyLockScreenIconImageView;
+@property(nonatomic, retain)UIImageView* batteryBuddyLockScreenChargerImageView;
 @end

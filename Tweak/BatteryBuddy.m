@@ -7,6 +7,22 @@
 
 #import "BatteryBuddy.h"
 
+#pragma mark - Status Bar class properties
+
+static UIImageView* batteryBuddyStatusBarIconImageView(_UIBatteryView* self, SEL _cmd) {
+    return (UIImageView *)objc_getAssociatedObject(self, (void *)batteryBuddyStatusBarIconImageView);
+};
+static void setBatteryBuddyStatusBarIconImageView(_UIBatteryView* self, SEL _cmd, UIImageView* rawValue) {
+    objc_setAssociatedObject(self, (void *)batteryBuddyStatusBarIconImageView, rawValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static UIImageView* batteryBuddyStatusBarChargerImageView(_UIBatteryView* self, SEL _cmd) {
+    return (UIImageView *)objc_getAssociatedObject(self, (void *)batteryBuddyStatusBarChargerImageView);
+};
+static void setBatteryBuddyStatusBarChargerImageView(_UIBatteryView* self, SEL _cmd, UIImageView* rawValue) {
+    objc_setAssociatedObject(self, (void *)batteryBuddyStatusBarChargerImageView, rawValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 #pragma mark - Status Bar class hooks
 
 BOOL (* orig__UIBatteryView__shouldShowBolt)(_UIBatteryView* self, SEL _cmd);
@@ -25,13 +41,13 @@ CGFloat override__UIBatteryView_chargePercent(_UIBatteryView* self, SEL _cmd) {
 	int actualPercentage = orig * 100;
 
 	if (actualPercentage <= 20 && !isCharging) {
-		[statusBarBatteryIconView setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarSad.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarSad.png"]];
 	} else if (actualPercentage <= 49 && !isCharging) {
-		[statusBarBatteryIconView setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarNeutral.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarNeutral.png"]];
 	} else if (actualPercentage > 49 && !isCharging) {
-		[statusBarBatteryIconView setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarHappy.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarHappy.png"]];
 	} else if (isCharging) {
-		[statusBarBatteryIconView setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarHappy.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarHappy.png"]];
 	}
 
 	[self updateIconColor];
@@ -62,28 +78,28 @@ void override__UIBatteryView__updateFillLayer(_UIBatteryView* self, SEL _cmd) {
 
 void _UIBatteryView_refreshIcon(_UIBatteryView* self, SEL _cmd) {
 	// remove existing images
-	statusBarBatteryIconView = nil;
-	statusBarBatteryChargerView = nil;
+	[self setBatteryBuddyStatusBarIconImageView:nil];
+	[self setBatteryBuddyStatusBarChargerImageView:nil];
 	for (UIImageView* imageView in [self subviews]) {
 		[imageView removeFromSuperview];
 	}
 
-	if (!statusBarBatteryIconView) {
-		statusBarBatteryIconView = [[UIImageView alloc] initWithFrame:[self bounds]];
-		[statusBarBatteryIconView setContentMode:UIViewContentModeScaleAspectFill];
-		[statusBarBatteryIconView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		if (![statusBarBatteryIconView isDescendantOfView:self]) {
-			[self addSubview:statusBarBatteryIconView];
+	if (![self batteryBuddyStatusBarIconImageView]) {
+		[self setBatteryBuddyStatusBarIconImageView:[[UIImageView alloc] initWithFrame:[self bounds]]];
+		[[self batteryBuddyStatusBarIconImageView] setContentMode:UIViewContentModeScaleAspectFill];
+		[[self batteryBuddyStatusBarIconImageView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		if (![[self batteryBuddyStatusBarIconImageView] isDescendantOfView:self]) {
+			[self addSubview:[self batteryBuddyStatusBarIconImageView]];
 		}
 	}
 
-	if (!statusBarBatteryChargerView && isCharging) {
-		statusBarBatteryChargerView = [[UIImageView alloc] initWithFrame:[self bounds]];
-		[statusBarBatteryChargerView setContentMode:UIViewContentModeScaleAspectFill];
-		[statusBarBatteryChargerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[statusBarBatteryChargerView setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarCharger.png"]];
-		if (![statusBarBatteryChargerView isDescendantOfView:self]) {
-			[self addSubview:statusBarBatteryChargerView];
+	if (![self batteryBuddyStatusBarChargerImageView] && isCharging) {
+		[self setBatteryBuddyStatusBarChargerImageView:[[UIImageView alloc] initWithFrame:[self bounds]]];
+		[[self batteryBuddyStatusBarChargerImageView] setContentMode:UIViewContentModeScaleAspectFill];
+		[[self batteryBuddyStatusBarChargerImageView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[[self batteryBuddyStatusBarChargerImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarCharger.png"]];
+		if (![[self batteryBuddyStatusBarChargerImageView] isDescendantOfView:self]) {
+			[self addSubview:[self batteryBuddyStatusBarChargerImageView]];
 		}
 	}
 
@@ -91,16 +107,32 @@ void _UIBatteryView_refreshIcon(_UIBatteryView* self, SEL _cmd) {
 }
 
 void _UIBatteryView_updateIconColor(_UIBatteryView* self, SEL _cmd) {
-	[statusBarBatteryIconView setImage:[[statusBarBatteryIconView image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-	[statusBarBatteryChargerView setImage:[[statusBarBatteryChargerView image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+	[[self batteryBuddyStatusBarIconImageView] setImage:[[[self batteryBuddyStatusBarIconImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+	[[self batteryBuddyStatusBarChargerImageView] setImage:[[[self batteryBuddyStatusBarChargerImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 
 	if (![[NSProcessInfo processInfo] isLowPowerModeEnabled]) {
-		[statusBarBatteryIconView setTintColor:[UIColor labelColor]];
-		[statusBarBatteryChargerView setTintColor:[UIColor labelColor]];
+		[[self batteryBuddyStatusBarIconImageView] setTintColor:[UIColor labelColor]];
+		[[self batteryBuddyStatusBarChargerImageView] setTintColor:[UIColor labelColor]];
 	} else {
-		[statusBarBatteryIconView setTintColor:[UIColor blackColor]];
-		[statusBarBatteryChargerView setTintColor:[UIColor blackColor]];
+		[[self batteryBuddyStatusBarIconImageView] setTintColor:[UIColor blackColor]];
+		[[self batteryBuddyStatusBarChargerImageView] setTintColor:[UIColor blackColor]];
 	}
+}
+
+#pragma mark - Lock screen class properties
+
+static UIImageView* batteryBuddyLockScreenIconImageView(_UIBatteryView* self, SEL _cmd) {
+    return (UIImageView *)objc_getAssociatedObject(self, (void *)batteryBuddyLockScreenIconImageView);
+};
+static void setBatteryBuddyLockScreenIconImageView(_UIBatteryView* self, SEL _cmd, UIImageView* rawValue) {
+    objc_setAssociatedObject(self, (void *)batteryBuddyLockScreenIconImageView, rawValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static UIImageView* batteryBuddyLockScreenChargerImageView(_UIBatteryView* self, SEL _cmd) {
+    return (UIImageView *)objc_getAssociatedObject(self, (void *)batteryBuddyLockScreenChargerImageView);
+};
+static void setBatteryBuddyLockScreenChargerImageView(_UIBatteryView* self, SEL _cmd, UIImageView* rawValue) {
+    objc_setAssociatedObject(self, (void *)batteryBuddyLockScreenChargerImageView, rawValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Lock screen class hooks
@@ -112,30 +144,30 @@ void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cm
 	[[self superview] setClipsToBounds:NO];
 
 	// face
-	if (!lockscreenBatteryIconView) {
-		lockscreenBatteryIconView = [[UIImageView alloc] initWithFrame:[self bounds]];
-		[lockscreenBatteryIconView setContentMode:UIViewContentModeScaleAspectFill];
-		[lockscreenBatteryIconView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[lockscreenBatteryIconView setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/LockscreenHappy.png"]];
+	if (![self batteryBuddyLockScreenIconImageView]) {
+		[self setBatteryBuddyLockScreenIconImageView:[[UIImageView alloc] initWithFrame:[self bounds]]];
+		[[self batteryBuddyLockScreenIconImageView] setContentMode:UIViewContentModeScaleAspectFill];
+		[[self batteryBuddyLockScreenIconImageView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[[self batteryBuddyLockScreenIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/LockscreenHappy.png"]];
 	}
-	[lockscreenBatteryIconView setImage:[[lockscreenBatteryIconView image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-	[lockscreenBatteryIconView setTintColor:[UIColor whiteColor]];
-	if (![lockscreenBatteryIconView isDescendantOfView:[self superview]]) {
-		[[self superview] addSubview:lockscreenBatteryIconView];
+	[[self batteryBuddyLockScreenIconImageView] setImage:[[[self batteryBuddyLockScreenIconImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+	[[self batteryBuddyLockScreenIconImageView] setTintColor:[UIColor whiteColor]];
+	if (![[self batteryBuddyLockScreenIconImageView] isDescendantOfView:[self superview]]) {
+		[[self superview] addSubview:[self batteryBuddyLockScreenIconImageView]];
 	}
 
 
 	// charger
-	if (!lockscreenBatteryChargerView) {
-		lockscreenBatteryChargerView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.origin.x - 25, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)];
-		[lockscreenBatteryChargerView setContentMode:UIViewContentModeScaleAspectFill];
-		[lockscreenBatteryChargerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[lockscreenBatteryChargerView setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/LockscreenCharger.png"]];
+	if (![self batteryBuddyLockScreenChargerImageView]) {
+		[self setBatteryBuddyLockScreenChargerImageView:[[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.origin.x - 25, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)]];
+		[[self batteryBuddyLockScreenChargerImageView] setContentMode:UIViewContentModeScaleAspectFill];
+		[[self batteryBuddyLockScreenChargerImageView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[[self batteryBuddyLockScreenChargerImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/LockscreenCharger.png"]];
 	}
-	[lockscreenBatteryChargerView setImage:[[lockscreenBatteryChargerView image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-	[lockscreenBatteryChargerView setTintColor:[UIColor whiteColor]];
-	if (![lockscreenBatteryChargerView isDescendantOfView:[self superview]]) {
-		[[self superview] addSubview:lockscreenBatteryChargerView];
+	[[self batteryBuddyLockScreenChargerImageView] setImage:[[[self batteryBuddyLockScreenChargerImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+	[[self batteryBuddyLockScreenChargerImageView] setTintColor:[UIColor whiteColor]];
+	if (![[self batteryBuddyLockScreenChargerImageView] isDescendantOfView:[self superview]]) {
+		[[self superview] addSubview:[self batteryBuddyLockScreenChargerImageView]];
 	}
 }
 
@@ -165,6 +197,13 @@ __attribute((constructor)) static void initialize() {
     }
 
 	if (pfShowInStatusBar) {
+		class_addProperty(NSClassFromString(@"_UIBatteryView"), "batteryBuddyStatusBarIconImageView", (objc_property_attribute_t[]){{"T", "@\"UIImageView\""}, {"N", ""}, {"V", "_batteryBuddyStatusBarIconImageView"}}, 3);
+		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(setBatteryBuddyStatusBarIconImageView:), (IMP)&setBatteryBuddyStatusBarIconImageView, "v@:@");
+		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(batteryBuddyStatusBarIconImageView), (IMP)&batteryBuddyStatusBarIconImageView, "@@:");
+		class_addProperty(NSClassFromString(@"_UIBatteryView"), "batteryBuddyStatusBarChargerImageView", (objc_property_attribute_t[]){{"T", "@\"UIImageView\""}, {"N", ""}, {"V", "_batteryBuddyStatusBarChargerImageView"}}, 3);
+		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(setBatteryBuddyStatusBarChargerImageView:), (IMP)&setBatteryBuddyStatusBarChargerImageView, "v@:@");
+		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(batteryBuddyStatusBarChargerImageView), (IMP)&batteryBuddyStatusBarChargerImageView, "@@:");
+
 		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(refreshIcon), (IMP)&_UIBatteryView_refreshIcon, "v@:");
 		class_addMethod(NSClassFromString(@"_UIBatteryView"), @selector(updateIconColor), (IMP)&_UIBatteryView_updateIconColor, "v@:");
 
@@ -176,6 +215,14 @@ __attribute((constructor)) static void initialize() {
 	}
 
 	if (pfShowOnLockScreen) {
+		class_addProperty(NSClassFromString(@"CSBatteryFillView"), "batteryBuddyLockScreenIconImageView", (objc_property_attribute_t[]){{"T", "@\"UIImageView\""}, {"N", ""}, {"V", "_batteryBuddyLockScreenIconImageView"}}, 3);
+		class_addMethod(NSClassFromString(@"CSBatteryFillView"), @selector(setBatteryBuddyLockScreenIconImageView:), (IMP)&setBatteryBuddyLockScreenIconImageView, "v@:@");
+		class_addMethod(NSClassFromString(@"CSBatteryFillView"), @selector(batteryBuddyLockScreenIconImageView), (IMP)&batteryBuddyLockScreenIconImageView, "@@:");
+
+		class_addProperty(NSClassFromString(@"CSBatteryFillView"), "batteryBuddyLockScreenChargerImageView", (objc_property_attribute_t[]){{"T", "@\"UIImageView\""}, {"N", ""}, {"V", "_batteryBuddyLockScreenChargerImageView"}}, 3);
+		class_addMethod(NSClassFromString(@"CSBatteryFillView"), @selector(setBatteryBuddyLockScreenChargerImageView:), (IMP)&setBatteryBuddyLockScreenChargerImageView, "v@:@");
+		class_addMethod(NSClassFromString(@"CSBatteryFillView"), @selector(batteryBuddyLockScreenChargerImageView), (IMP)&batteryBuddyLockScreenChargerImageView, "@@:");
+
 		MSHookMessageEx(NSClassFromString(@"CSBatteryFillView"), @selector(didMoveToWindow), (IMP)&override_CSBatteryFillView_didMoveToWindow, (IMP *)&orig_CSBatteryFillView_didMoveToWindow);
 	}
 
