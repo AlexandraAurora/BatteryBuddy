@@ -225,6 +225,4 @@ __attribute((constructor)) static void initialize() {
 
 		MSHookMessageEx(NSClassFromString(@"CSBatteryFillView"), @selector(didMoveToWindow), (IMP)&override_CSBatteryFillView_didMoveToWindow, (IMP *)&orig_CSBatteryFillView_didMoveToWindow);
 	}
-
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)load_preferences, (CFStringRef)@"dev.traurige.batterybuddy.preferences.reload", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
 }
