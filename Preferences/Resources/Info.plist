@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>BatteryBuddyPreferences</string>
 	<key>CFBundleIdentifier</key>
-	<string>dev.traurige.batterybuddypreferences</string>
+	<string>dev.traurige.batterybuddy.preferences</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
