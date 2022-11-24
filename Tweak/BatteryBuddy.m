@@ -41,13 +41,13 @@ CGFloat override__UIBatteryView_chargePercent(_UIBatteryView* self, SEL _cmd) {
 	int actualPercentage = orig * 100;
 
 	if (actualPercentage <= 20 && !isCharging) {
-		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarSad.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/dev.traurige/BatteryBuddy/StatusBarSad.png"]];
 	} else if (actualPercentage <= 49 && !isCharging) {
-		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarNeutral.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/dev.traurige/BatteryBuddy/StatusBarNeutral.png"]];
 	} else if (actualPercentage > 49 && !isCharging) {
-		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarHappy.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/dev.traurige/BatteryBuddy/StatusBarHappy.png"]];
 	} else if (isCharging) {
-		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarHappy.png"]];
+		[[self batteryBuddyStatusBarIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/dev.traurige/BatteryBuddy/StatusBarHappy.png"]];
 	}
 
 	[self updateIconColor];
@@ -97,7 +97,7 @@ void _UIBatteryView_refreshIcon(_UIBatteryView* self, SEL _cmd) {
 		[self setBatteryBuddyStatusBarChargerImageView:[[UIImageView alloc] initWithFrame:[self bounds]]];
 		[[self batteryBuddyStatusBarChargerImageView] setContentMode:UIViewContentModeScaleAspectFill];
 		[[self batteryBuddyStatusBarChargerImageView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[[self batteryBuddyStatusBarChargerImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/StatusBarCharger.png"]];
+		[[self batteryBuddyStatusBarChargerImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/dev.traurige/BatteryBuddy/StatusBarCharger.png"]];
 		if (![[self batteryBuddyStatusBarChargerImageView] isDescendantOfView:self]) {
 			[self addSubview:[self batteryBuddyStatusBarChargerImageView]];
 		}
@@ -148,7 +148,7 @@ void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cm
 		[self setBatteryBuddyLockScreenIconImageView:[[UIImageView alloc] initWithFrame:[self bounds]]];
 		[[self batteryBuddyLockScreenIconImageView] setContentMode:UIViewContentModeScaleAspectFill];
 		[[self batteryBuddyLockScreenIconImageView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[[self batteryBuddyLockScreenIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/LockscreenHappy.png"]];
+		[[self batteryBuddyLockScreenIconImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/dev.traurige/BatteryBuddy/LockScreenHappy.png"]];
 	}
 	[[self batteryBuddyLockScreenIconImageView] setImage:[[[self batteryBuddyLockScreenIconImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 	[[self batteryBuddyLockScreenIconImageView] setTintColor:[UIColor whiteColor]];
@@ -162,7 +162,7 @@ void override_CSBatteryFillView_didMoveToWindow(CSBatteryFillView* self, SEL _cm
 		[self setBatteryBuddyLockScreenChargerImageView:[[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.origin.x - 25, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height)]];
 		[[self batteryBuddyLockScreenChargerImageView] setContentMode:UIViewContentModeScaleAspectFill];
 		[[self batteryBuddyLockScreenChargerImageView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[[self batteryBuddyLockScreenChargerImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/BatteryBuddy/LockscreenCharger.png"]];
+		[[self batteryBuddyLockScreenChargerImageView] setImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Documents/dev.traurige/BatteryBuddy/LockScreenCharger.png"]];
 	}
 	[[self batteryBuddyLockScreenChargerImageView] setImage:[[[self batteryBuddyLockScreenChargerImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 	[[self batteryBuddyLockScreenChargerImageView] setTintColor:[UIColor whiteColor]];
