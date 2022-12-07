@@ -35,9 +35,10 @@
 }
 
 - (void)respring {
-    pid_t pid;
-    const char* args[] = {"sbreload", NULL};
-    posix_spawn(&pid, "/usr/bin/sbreload", NULL, NULL, (char * const *)args, NULL);
+    NSTask* task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/killall"];
+    [task setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
+    [task launch];
 }
 
 - (void)resetPrompt {
