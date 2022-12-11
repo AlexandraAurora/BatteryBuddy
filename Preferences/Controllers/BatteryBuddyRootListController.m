@@ -20,7 +20,7 @@
 }
 
 - (void)promptToRespring {
-    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"BatteryBuddy" message:@"This option requires a respring to apply. To you want to respring now?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"BatteryBuddy" message:@"This option requires a respring to apply. Do you want to respring now?" preferredStyle:UIAlertControllerStyleAlert];
 
     UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
         [self respring];
