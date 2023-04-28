@@ -14,8 +14,9 @@
 
     if ([[specifier propertyForKey:@"key"] isEqualToString:kPreferenceKeyEnabled] ||
 		[[specifier propertyForKey:@"key"] isEqualToString:kPreferenceKeyShowInStatusBar] ||
-		[[specifier propertyForKey:@"key"] isEqualToString:kPreferenceKeyShowOnLockScreen]) {
-			[self promptToRespring];
+		[[specifier propertyForKey:@"key"] isEqualToString:kPreferenceKeyShowOnLockScreen]
+	) {
+		[self promptToRespring];
     }
 }
 
@@ -35,10 +36,15 @@
 }
 
 - (void)respring {
-    NSTask* task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/killall"];
-    [task setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
-    [task launch];
+	NSArray* launchPaths = @[@"/usr/bin/killall", @"/var/jb/usr/bin/killall"];
+	for (NSString* launchPath in launchPaths) {
+		if ([[NSFileManager defaultManager] fileExistsAtPath:launchPath]) {
+			NSTask* task = [[NSTask alloc] init];
+			[task setLaunchPath:launchPath];
+			[task setArguments:@[@"backboardd"]];
+			[task launch];
+		}
+	}
 }
 
 - (void)resetPrompt {
