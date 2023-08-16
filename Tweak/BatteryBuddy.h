@@ -6,6 +6,7 @@
 //
 
 #import "substrate.h"
+#import <rootless.h>
 #import <UIKit/UIKit.h>
 #import "../Preferences/PreferenceKeys.h"
 
