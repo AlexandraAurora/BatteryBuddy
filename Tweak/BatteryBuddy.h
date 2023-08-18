@@ -10,6 +10,8 @@
 #import <UIKit/UIKit.h>
 #import "../Preferences/PreferenceKeys.h"
 
+#define kDocumentPath ROOT_PATH_NS_VAR(@"/var/mobile/Documents/dev.traurige/BatteryBuddy/")
+
 BOOL isCharging = NO;
 
 // preferences
